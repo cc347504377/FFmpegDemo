@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText = (EditText) findViewById(R.id.edit);
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(this);
+        String mp4 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/非狐/one.mp4";
+        String aac = Environment.getExternalStorageDirectory().getAbsolutePath() + "/非狐/s.aac";
+        String out = Environment.getExternalStorageDirectory().getAbsolutePath() + "/非狐/out.mp4";
+        editText.setText("-y -i " + mp4 + " -i " + aac + " -filter_complex amix=inputs=2:duration=first:dropout_transition=2 " + out);
     }
 
     private void initFF() {
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         String[] split = editText.getText().toString().split(" ");
         try {
-            fFmpeg.execute(split,new ExecuteBinaryResponseHandler(){
+            fFmpeg.execute(split, new ExecuteBinaryResponseHandler() {
                 @Override
                 public void onSuccess(String message) {
                     Log.i("TAG", "onSuccess" + message);
